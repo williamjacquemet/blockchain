@@ -21,7 +21,6 @@ class Server {
 
 		this.app = express();
 		this.http = http.Server(this.app);
-		var datablock = "popo";
 	}
 
   	appConfig() {
@@ -33,8 +32,6 @@ class Server {
 
 	/* Including app Routes starts*/
   	includeRoutes(app) {
-		
-
 		app.use(bodyParser.json()); // to support JSON bodies
 		app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
 		app.set('view engine', 'pug');
@@ -69,8 +66,8 @@ function getdata() {
 			res.render('index.pug');
 			//console.log(req.body.data);
 			block(req.body.data);
-			return req.body.data;
-
+			//return req.body.data;
+			return 5;
 		});
 	};
 
@@ -99,12 +96,11 @@ getdata();
 				message: '404, Not Found.'
 			});
 		});
-	}
-	//console.log(includeRoutes.getdata);
+	};
+	
 	/* Including app Routes ends*/
 
 	appExecute() {
-
 		this.appConfig();
 		this.includeRoutes(this.app);
 
