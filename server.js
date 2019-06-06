@@ -100,6 +100,7 @@ getdata();
 			});
 		});
 	}
+	console.log(includeRoutes.getdata);
 	/* Including app Routes ends*/
 
 	appExecute() {
