@@ -11,34 +11,16 @@ const bodyParser = require('body-parser');
 let i;
 const blockchain = require('./blockchain');
 var pug = require('pug');
-
-
-class Server {
-
-	constructor() {
-		this.port = process.env.PORT || 4000;
-		this.host = `localhost`;
-
-		this.app = express();
-		this.http = http.Server(this.app);
-	}
-
-  	appConfig() {
-		this.app.use(
-			bodyParser.json()
-		);
-		this.app.use(require("express").static('client'));
- 	}
+var app = express();
 
 	/* Including app Routes starts*/
-  	includeRoutes(app) {
-		app.use(bodyParser.json()); // to support JSON bodies
-		app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
-		app.set('view engine', 'pug');
-		app.set('views','./views');
-		app.get('', function (req, res) {
-		res.render('index.pug');
-		});
+app.use(bodyParser.json()); // to support JSON bodies
+app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
+app.set('view engine', 'pug');
+app.set('views','./views');
+app.get('', function (req, res) {
+res.render('index.pug');
+
 
 function block(data) {
 			const previousBlock = blockchain.getLastBlock();
@@ -96,21 +78,12 @@ getdata();
 				message: '404, Not Found.'
 			});
 		});
-	};
-	
-	/* Including app Routes ends*/
 
-	appExecute() {
-		this.appConfig();
-		this.includeRoutes(this.app);
 
-		this.http.listen(this.port, this.host, () => {
-			console.log(`Listening on http://${this.host}:${this.port}`);
-		});
-	}
+});
 
-}
 
-module.exports = new Server();
-const app = new Server();
-app.appExecute();
+app.listen(4000);
+//module.exports = new Server();
+
+//app.appExecute();
