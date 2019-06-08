@@ -8,7 +8,6 @@
 const express = require("express");
 const http = require('http');
 const bodyParser = require('body-parser');
-let i;
 const blockchain = require('./blockchain');
 var pug = require('pug');
 var app = express();
@@ -20,7 +19,7 @@ app.set('view engine', 'pug');
 app.set('views','./views');
 app.get('', function (req, res) {
 res.render('index.pug');
-
+});
 
 function block(data) {
 			const previousBlock = blockchain.getLastBlock();
@@ -38,8 +37,8 @@ function block(data) {
 				previous_hash: block.previous_hash
 			}	
 			
-			var end = Date.now() + 50
-			while (Date.now() < end) ;
+	/*		var end = Date.now() + 50  timeout 50 ms
+			while (Date.now() < end) ;*/
 			return jsonResponse;
 }
 		
@@ -48,8 +47,7 @@ function getdata() {
 			res.render('index.pug');
 			//console.log(req.body.data);
 			block(req.body.data);
-			//return req.body.data;
-			return 5;
+			return req.body.data;
 		});
 	};
 
@@ -62,9 +60,8 @@ getdata();
                 	//error: false,
 					length: blockchain.chain.length,
 					blockchain: blockchain.chain,
-					//data: "dezdze"
 			})
-		}
+		} 
 			else {
 				response.status(417).json({
 					message: 'Your Blockchain is invalid.',
@@ -80,10 +77,10 @@ getdata();
 		});
 
 
-});
+
 
 
 app.listen(4000);
-//module.exports = new Server();
+
 
 //app.appExecute();

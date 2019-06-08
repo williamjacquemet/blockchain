@@ -3,26 +3,43 @@
 * create basic blockchain using Nodejs
 */
 'use strict';
+const express = require("express");
+const http = require('http');
+const bodyParser = require('body-parser');
+var pug = require('pug');
+var app = express();
 
+	/* Including app Routes starts*/
+app.use(bodyParser.json()); // to support JSON bodies
+app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
+app.set('view engine', 'pug');
+app.set('views','./views');
+app.get('', function (req, res) {
+res.render('index.pug');
+});
 const SHA256 = require("crypto-js/sha256");
 var server = require('./server');
-var datablock = server.datablock
-console.log("dans blockchain");
-console.log(datablock);
+
+
+	/*var end = Date.now() + 5000  //timeout 50 ms
+	while (Date.now() < end) {
+		console.log(bla);
+		};*/
+	/* Including app Routes starts*/
+
 class Blockchain {
 
 	constructor() {
+				
 		this.chain = [];
 		this.createBlock({previousHash: 0, proof: 1});
 	}
 
-	createBlock({ previousHash, proof }) {
-		
-		
+	createBlock({ previousHash, proof}) {
+
 		const block = {
 			index: this.chain.length + 1,
 			timestamp: (+new Date()).toString(),
-			//data: server.getdata,
 			data: Math.random(),
 			proof: proof,
 			previous_hash: previousHash
