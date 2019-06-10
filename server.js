@@ -18,12 +18,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bo
 app.set('view engine', 'pug');
 app.set('views','./views');
 app.get('', function (req, res) {
-res.render('index.pug');
+res.render('page.pug');
 });
 var end = Date.now() + 5000  //timeout 50 ms
 
-function block(data) {
-			console.log(returneddata);
+function block() {
+
+	
 			const previousBlock = blockchain.getLastBlock();
 			const proof = blockchain.proofOfWork(previousBlock.proof);
 			const previousHash = blockchain.generateHash(previousBlock);
@@ -31,34 +32,23 @@ function block(data) {
 				previousHash: previousHash,
 				proof: proof,
 				data : returneddata
-			});/*
-			const jsonResponse = {
-				index: block.index,
-				timestamp: block.timestamp,
-				data: data,
-				proof: block.proof,
-				previous_hash: block.previous_hash
-			}	
-			return jsonResponse;*/
+			});
 }
 var returneddata ;
 function getdata() {
 		app.post('/index', function (req, res) {
-			res.render('index.pug');
-			block(req.body.data);
-			//return req.body.data;
+			res.render('page.pug');
 			returneddata = req.body.data;
+			block();
 			return returneddata;
 		});
 	};
 
 getdata();
-console.log(getdata());
+
 		app.get("/get_blockchain", function (request, response) {
 			if(blockchain.isChainValid()) {
 				response.status(200).json({
-					//message: 'Your Blockchain is valid. \r\n',
-                	//error: false,
 					length: blockchain.chain.length,
 					blockchain: blockchain.chain,
 			})
