@@ -35,12 +35,12 @@ class Blockchain {
 		this.createBlock({previousHash: 0, proof: 1});
 	}
 
-	createBlock({ previousHash, proof}) {
+	createBlock({ previousHash, proof, data}) {
 
 		const block = {
 			index: this.chain.length + 1,
 			timestamp: (+new Date()).toString(),
-			data: Math.random(),
+			data: data,
 			proof: proof,
 			previous_hash: previousHash
 		}

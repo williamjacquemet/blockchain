@@ -20,15 +20,18 @@ app.set('views','./views');
 app.get('', function (req, res) {
 res.render('index.pug');
 });
+var end = Date.now() + 5000  //timeout 50 ms
 
 function block(data) {
+			console.log(returneddata);
 			const previousBlock = blockchain.getLastBlock();
 			const proof = blockchain.proofOfWork(previousBlock.proof);
 			const previousHash = blockchain.generateHash(previousBlock);
 			const block = blockchain.createBlock({
 				previousHash: previousHash,
-				proof: proof
-			});
+				proof: proof,
+				data : returneddata
+			});/*
 			const jsonResponse = {
 				index: block.index,
 				timestamp: block.timestamp,
@@ -36,24 +39,22 @@ function block(data) {
 				proof: block.proof,
 				previous_hash: block.previous_hash
 			}	
-			
-	/*		var end = Date.now() + 50  timeout 50 ms
-			while (Date.now() < end) ;*/
-			return jsonResponse;
+			return jsonResponse;*/
 }
-		
+var returneddata ;
 function getdata() {
 		app.post('/index', function (req, res) {
 			res.render('index.pug');
-			//console.log(req.body.data);
 			block(req.body.data);
-			return req.body.data;
+			//return req.body.data;
+			returneddata = req.body.data;
+			return returneddata;
 		});
 	};
 
 getdata();
+console.log(getdata());
 		app.get("/get_blockchain", function (request, response) {
-			//console.log(getdata());
 			if(blockchain.isChainValid()) {
 				response.status(200).json({
 					//message: 'Your Blockchain is valid. \r\n',
@@ -77,7 +78,7 @@ getdata();
 		});
 
 
-
+module.exports.returneddata = returneddata;
 
 
 app.listen(4000);
