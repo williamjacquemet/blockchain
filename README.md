@@ -1,6 +1,10 @@
 # blockchain
-The goal of this project is to create a blockchain that can take __input_data__ and insert it in blocks
+Next step: create users with tokens and exchanges thoses tokens
 
-The blocks has to contains data or no and have a fixed duration, for ex : 60 sec
+
+## Accomplishment 
+
+Create PoS blockchain
+
 
 
