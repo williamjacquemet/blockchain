@@ -1,6 +1,5 @@
 /* 
- * @author Shashank Tiwari
- * create basic blockchain using Nodejs
+ * @author William JACQUEMET
  */
 
 'use strict';
@@ -9,10 +8,10 @@ const express = require("express");
 const http = require('http');
 const bodyParser = require('body-parser');
 const blockchain = require('./blockchain');
+const user = require('./user');
 var pug = require('pug');
 var app = express();
 
-	/* Including app Routes starts*/
 app.use(bodyParser.json()); // to support JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
 app.set('view engine', 'pug');
@@ -31,20 +30,44 @@ function block() {
 				previousHash: previousHash,
 				proof: proof,
 				data : returneddata
-				
 			});
 }
+
+/*
+var toType = function(obj) {
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}// get the type of a variable and how to convert it to int
+var x = Number("1000")*/
+/*
+			user.user2.transfer_token(-10);
+			user.user1.show_token();
+			*/
+
 var returneddata = [];
-var returned;
-returneddata.push("data");
+var datareturned, giving, receiving, quantity, rawdata;
+
+
 function getdata() {
 		app.post('', function (req, res) {
 			res.render('page.pug');
-			returned = req.body.data;
 			
-			//block();
-			returneddata.push(returned);
-			console.log(returneddata);
+			datareturned = req.body.data;
+			quantity = req.body.quantity;
+			giving = req.body.giving;
+			receiving = req.body.receiving;
+			rawdata = "rawdata:"+datareturned +"     "+ "action:  "+giving +"     "+ "is giving to:   " + receiving +"     "+ "the amount of: "+ quantity + "  william_token";
+			if (giving == 'user1'){
+				user.user1.transfer_token(-quantity);
+				user.user2.transfer_token(quantity);
+			}
+			if (giving == 'user2'){
+				user.user2.transfer_token(-quantity);
+				user.user1.transfer_token(quantity);
+			}
+			
+			console.log(user.user1.show_token());
+			console.log(rawdata)
+		returneddata.push(rawdata);
 			return returneddata;
 		});
 	};

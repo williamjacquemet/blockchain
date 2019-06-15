@@ -1,7 +1,29 @@
 form(action='', method='post')
-  input(type='test', name='data', value='data you would like to put in the blockchain')
-  input(type='submit', value='submit')
-br
-br
+  |	raw data to put in the blockchain
+  input(type='test', name='data', value='anything')
+  br
+  br
+  | how much do you want to give to the user :
+  input(type='number', name='quantity', min='0', max='100', value='10')
+  br
+  br
+  | which user will give tokens
+  br
+  input(type='radio', name='giving', value='user1')
+  label(for='User1')  User1
+  br
+  input(type='radio', name='giving', value='user2')
+  label(for='User2')  User2
+  br
+  | which user will receive tokens
+  br
+  input(type='radio', name='receiving', value='user1')
+  label(for='User1')  User1
+  br
+  input(type='radio', name='receiving', value='user2')
+  label(for='User2')  User2
+  br
+  input(type='submit', value="submit")
+  br
 p
   a(href='http://localhost:4000/get_blockchain') blockchaindata

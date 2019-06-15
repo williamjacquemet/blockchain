@@ -9,14 +9,6 @@ const bodyParser = require('body-parser');
 var pug = require('pug');
 var app = express();
 
-	/* Including app Routes starts*/
-app.use(bodyParser.json()); // to support JSON bodies
-app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
-app.set('view engine', 'pug');
-app.set('views','./views');
-app.get('', function (req, res) {
-res.render('index.pug');
-});
 const SHA256 = require("crypto-js/sha256");
 var server = require('./server');
 
